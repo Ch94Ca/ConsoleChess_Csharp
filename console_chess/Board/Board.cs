@@ -1,4 +1,6 @@
-﻿namespace board
+﻿using exceptions;
+
+namespace board
 {
     class Board
     {
@@ -18,10 +20,44 @@
             return Pieces[line, column];
         }
 
-        public void AddPiece(Piece piece, Position position)
+        public Piece Piece(Position position)
         {
+            return Pieces[position.Line, position.Column];
+        }
+
+        public bool CheckPiece(Position position)
+        {
+            ValidPosition(position);
+            return Piece(position) != null;
+        }
+
+        public void AddPiece(Piece piece, Position position)
+        {   
+            if(CheckPiece(position))
+            {
+                throw new BoardException("This position already heave a piece.");
+            }
+
             Pieces[position.Line, position.Column] = piece;
             piece.Position = position;
+        }
+
+        public bool ValidPosition(Position position)
+        {
+            if (position.Line < 0 || position.Column < 0 || position.Line < Lines || position.Column < Columns)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void CheckPosition(Position position)
+        {
+            if (!ValidPosition(position))
+            {
+                throw new BoardException("Invalid position");
+            }
         }
 
     }
