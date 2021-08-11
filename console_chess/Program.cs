@@ -26,6 +26,11 @@ namespace console_chess
 
             Display.PrintBoard(board);
 
+            ChessPosition chessPos = new ChessPosition('a', 1);
+
+            Console.WriteLine(chessPos);
+            Console.WriteLine(chessPos.ToPosition());
+
         }
     }
 }
