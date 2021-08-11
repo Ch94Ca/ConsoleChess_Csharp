@@ -1,4 +1,6 @@
-﻿namespace board
+﻿using System.Text;
+
+namespace board
 {
     class Position
     {
@@ -15,6 +17,11 @@
         {
             Line = line;
             Column = column;
+        }
+
+        public string ToChessPosition()
+        {
+            return $"{(char)(Column + 97)}{Line-4}";
         }
 
         public override string ToString()

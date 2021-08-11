@@ -9,7 +9,7 @@ namespace console_chess
     class Program
     {
         static void Main(string[] args)
-        {
+        {   
             ChessGame game = null;
 
             try
@@ -27,9 +27,10 @@ namespace console_chess
                     bool[,] validPositions = game.Board.Piece(origin).ValidMoves();
 
                     Console.Clear();
-                    Display.PrintBoard(game.Board, validPositions);
+                    Display.PrintBoard(game.Board, validPositions, origin);
 
-                    Console.Write("\n- Destination: ");
+                    Console.WriteLine($"\n- Origin: {origin.ToChessPosition()} ({game.Board.Piece(origin)})");
+                    Console.Write("- Destination: ");
                     Position destination = Display.ReadChessPosition().ToPosition();
 
                     game.MovePiece(origin, destination);

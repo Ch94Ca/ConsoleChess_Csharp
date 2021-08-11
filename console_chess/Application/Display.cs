@@ -25,10 +25,13 @@ namespace application
 
         }
 
-        public static void PrintBoard(Board board, bool[,] validPositions)
+        public static void PrintBoard(Board board, bool[,] validPositions, Position origin)
         {
-            ConsoleColor originalColor = Console.BackgroundColor;
+            ConsoleColor originaBGlColor = Console.BackgroundColor;
+            ConsoleColor originaFGlColor = Console.ForegroundColor;
             ConsoleColor validPositionColor = ConsoleColor.DarkGray;
+            ConsoleColor movedPieceBGColor = ConsoleColor.Gray;
+            ConsoleColor movedPieceFGColor = ConsoleColor.Black;
 
             for (int i = 0; i < board.Lines; i++)
             {
@@ -43,11 +46,18 @@ namespace application
                     }
                     else
                     {
-                        Console.BackgroundColor = originalColor;
+                        Console.BackgroundColor = originaBGlColor;
+                    }
+
+                    if(origin.Line == i && origin.Column == j)
+                    {
+                        Console.BackgroundColor = movedPieceBGColor;
+                        Console.ForegroundColor = movedPieceFGColor;
                     }
 
                     PrintPiece(board.Piece(i, j));
-                    Console.BackgroundColor = originalColor;
+                    Console.BackgroundColor = originaBGlColor;
+                    Console.ForegroundColor = originaFGlColor;
                 }
 
                 Console.WriteLine();
