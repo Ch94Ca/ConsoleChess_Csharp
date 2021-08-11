@@ -10,17 +10,26 @@ namespace console_chess
     {
         static void Main(string[] args)
         {
-            Board board = new Board(8, 8);
+            ChessGame game = null;
 
             try
             {
-                board.AddPiece(new Rook(board, Color.black), new Position(0, 0));
-                board.AddPiece(new Rook(board, Color.black), new Position(1, 3));
-                board.AddPiece(new King(board, Color.black), new Position(2, 4));
+                game = new ChessGame();
 
-                board.AddPiece(new Rook(board, Color.white), new Position(3, 5));
-                board.AddPiece(new Rook(board, Color.white), new Position(1, 4));
-                board.AddPiece(new King(board, Color.white), new Position(4, 4));
+                while(!game.EndGame)
+                {
+                    Console.Clear();
+                    Display.PrintBoard(game.Board);
+
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = Display.ReadChessPosition().ToPosition();
+                    Console.Write("Destination: ");
+                    Position destination = Display.ReadChessPosition().ToPosition();
+
+                    game.MovePiece(origin, destination);
+
+                }
 
             }
             catch(BoardException e)
@@ -28,7 +37,7 @@ namespace console_chess
                 Console.WriteLine(e.Message);
             }
 
-            Display.PrintBoard(board);
+            Display.PrintBoard(game.Board);
 
         }
     }

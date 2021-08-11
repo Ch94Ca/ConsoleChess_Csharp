@@ -14,5 +14,10 @@
             Moves = 0;
             Board = board;
         }
+
+        public void IncMoves()
+        {
+            Moves++;
+        }
     }
 }
