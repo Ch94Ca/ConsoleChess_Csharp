@@ -20,6 +20,31 @@
             Moves++;
         }
 
+        public bool IsValidMoves()
+        {
+            bool[,] validMoves = ValidMoves();
+
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (validMoves[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+        public bool CanMoveto(Position destination)
+        {
+            return ValidMoves()[destination.Line, destination.Column];
+        }
+
         public abstract bool[,] ValidMoves();
+
     }
 }

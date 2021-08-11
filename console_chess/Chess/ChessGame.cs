@@ -1,4 +1,6 @@
-﻿using board;
+﻿using System;
+using board;
+using exceptions;
 
 namespace chess
 {
@@ -6,8 +8,8 @@ namespace chess
     {
         public Board Board { get; private set; }
         public bool EndGame { get; private set; }
-        private int Turn;
-        private Color ActualPlayer;
+        public int Turn { get; private set; }
+        public Color ActualPlayer { get; private set; }
 
         public ChessGame()
         {
@@ -25,6 +27,59 @@ namespace chess
             Piece captured = Board.RemovePiece(destination);
             Board.AddPiece(piece, destination);
 
+        }
+
+        public void DoMove(Position origin, Position destination)
+        {
+            MovePiece(origin, destination);
+            Turn++;
+            ChangePlayer();
+
+        }
+
+        public void CheckOriginPosition(Position origin)
+        {
+            if(Board.Piece(origin) == null)
+            {
+                throw new BoardException("The is no piece in this position.");
+            }
+
+            if(Board.Piece(origin).Color != ActualPlayer)
+            {
+                if(ActualPlayer == Color.white)
+                {
+                    throw new BoardException("White's Turn!");
+                }
+                else
+                {
+                    throw new BoardException("Black's Turn!");
+                }
+            }
+
+            if(!Board.Piece(origin).IsValidMoves())
+            {
+                throw new BoardException("There is no valid moves for this piece.");
+            }
+
+        }
+        public void CheckDestinationPosition(Position origin, Position destination)
+        {
+            if (!Board.Piece(origin).CanMoveto(destination))
+            {
+                throw new BoardException("Invalid destination.");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            if(ActualPlayer == Color.white)
+            {
+                ActualPlayer = Color.black;
+            }
+            else
+            {
+                ActualPlayer = Color.white;
+            }
         }
 
         private void PutPieces()

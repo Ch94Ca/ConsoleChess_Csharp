@@ -21,7 +21,7 @@ namespace board
 
         public string ToChessPosition()
         {
-            return $"{(char)(Column + 97)}{Line-4}";
+            return $"{(char)(Column + 97)}{8-Line}";
         }
 
         public override string ToString()
