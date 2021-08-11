@@ -21,8 +21,7 @@ namespace console_chess
                     try
                     {
                         Console.Clear();
-                        Display.PrintBoard(game.Board);
-                        Console.WriteLine($"\n- Turn: {game.Turn} ({game.ActualPlayer})");
+                        Display.PrintGame(game);
 
                         Console.Write("\n- Origin: ");
                         Position origin = Display.ReadChessPosition().ToPosition();

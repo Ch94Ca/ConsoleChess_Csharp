@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic ;
 using board;
 using chess;
 
@@ -6,6 +7,39 @@ namespace application
 {
     class Display
     {
+        public static void PrintGame(ChessGame game)
+        {
+            PrintBoard(game.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(game);
+            Console.WriteLine();
+            Console.WriteLine($"\n- Turn: {game.Turn} ({game.ActualPlayer})");
+
+        }
+
+        public static void PrintCapturedPieces(ChessGame game)
+        {
+            Console.WriteLine("Captured pieces:");
+            Console.Write("White's: ");
+            PrintSet(game.GetCapturedPieces(Color.white));
+            Console.WriteLine();
+            Console.Write("Black's: ");
+            ConsoleColor originalColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintSet(game.GetCapturedPieces(Color.black));
+            Console.ForegroundColor = originalColor;
+        }
+
+        public static void PrintSet(HashSet<Piece> set)
+        {
+            Console.Write("[ ");
+            foreach (Piece piece in set)
+            {
+                Console.Write($"{piece} ");
+            }
+            Console.Write("]");
+        }
+
         public static void PrintBoard(Board board)
         {
             for (int i = 0; i < board.Lines; i++)
