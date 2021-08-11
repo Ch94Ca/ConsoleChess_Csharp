@@ -21,10 +21,15 @@ namespace console_chess
                     Console.Clear();
                     Display.PrintBoard(game.Board);
 
-                    Console.WriteLine();
-                    Console.Write("Origin: ");
+                    Console.Write("\n- Origin: ");
                     Position origin = Display.ReadChessPosition().ToPosition();
-                    Console.Write("Destination: ");
+
+                    bool[,] validPositions = game.Board.Piece(origin).ValidMoves();
+
+                    Console.Clear();
+                    Display.PrintBoard(game.Board, validPositions);
+
+                    Console.Write("\n- Destination: ");
                     Position destination = Display.ReadChessPosition().ToPosition();
 
                     game.MovePiece(origin, destination);

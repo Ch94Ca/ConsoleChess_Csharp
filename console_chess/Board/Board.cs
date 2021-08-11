@@ -57,7 +57,7 @@ namespace board
 
         public bool ValidPosition(Position position)
         {
-            if (position.Line < 0 || position.Column < 0 || position.Line < Lines || position.Column < Columns)
+            if (position.Line < 0 || position.Column < 0 || position.Line >= Lines || position.Column >= Columns)
             {
                 return false;
             }
