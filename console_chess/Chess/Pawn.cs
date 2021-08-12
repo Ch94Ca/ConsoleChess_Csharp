@@ -4,9 +4,11 @@ namespace chess
 {
     class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color)
-        {
+        private ChessGame Game;
 
+        public Pawn(Board board, Color color, ChessGame game) : base(board, color)
+        {
+            Game = game;
         }
 
         public override string ToString()
@@ -56,6 +58,24 @@ namespace chess
                     matrix[verifyPosition.Line, verifyPosition.Column] = true;
                 }
 
+                // # special: En Passant
+
+                if (Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && EnemyIn(left) && Board.Piece(left) == Game.EnPassantVulnerable)
+                    {
+                        matrix[left.Line - 1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && EnemyIn(right) && Board.Piece(right) == Game.EnPassantVulnerable)
+                    {
+                        matrix[right.Line - 1, right.Column] = true;
+                    }
+
+                }
+
             }
             else
             {
@@ -82,6 +102,24 @@ namespace chess
                 {
                     matrix[verifyPosition.Line, verifyPosition.Column] = true;
                 }
+            }
+
+            // # special: En Passant
+
+            if (Position.Line == 4)
+            {
+                Position left = new Position(Position.Line, Position.Column - 1);
+                if (Board.ValidPosition(left) && EnemyIn(left) && Board.Piece(left) == Game.EnPassantVulnerable)
+                {
+                    matrix[left.Line + 1, left.Column] = true;
+                }
+
+                Position right = new Position(Position.Line, Position.Column + 1);
+                if (Board.ValidPosition(right) && EnemyIn(right) && Board.Piece(right) == Game.EnPassantVulnerable)
+                {
+                    matrix[right.Line + 1, right.Column] = true;
+                }
+
             }
 
             return matrix;
