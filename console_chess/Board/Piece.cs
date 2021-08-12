@@ -20,6 +20,11 @@
             Moves++;
         }
 
+        public void DecMoves()
+        {
+            Moves--;
+        }
+
         public bool IsValidMoves()
         {
             bool[,] validMoves = ValidMoves();

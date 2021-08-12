@@ -15,6 +15,11 @@ namespace application
             Console.WriteLine();
             Console.WriteLine($"\n- Turn: {game.Turn} ({game.ActualPlayer})");
 
+            if(game.Check)
+            {   
+                Console.WriteLine("\nCheck!");
+            }
+
         }
 
         public static void PrintCapturedPieces(ChessGame game)

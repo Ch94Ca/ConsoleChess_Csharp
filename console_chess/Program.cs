@@ -54,7 +54,9 @@ namespace console_chess
                 Console.WriteLine(e.Message);
             }
 
-            Display.PrintBoard(game.Board);
+            Console.Clear();
+            Display.PrintGame(game);
+            Console.WriteLine($"\nCheckMate! {game.ActualPlayer} Wins!");
 
         }
     }
