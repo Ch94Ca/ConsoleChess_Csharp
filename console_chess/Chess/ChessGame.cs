@@ -144,7 +144,6 @@ namespace chess
 
             }
 
-
         }
 
         public void DoMove(Position origin, Position destination)
@@ -155,6 +154,21 @@ namespace chess
             {
                 UndoMove(origin, destination, captured);
                 throw new BoardException("Check!");
+            }
+
+            Piece piece = Board.Piece(destination);
+            // # Special: Promotion
+
+            if(piece is Pawn)
+            {
+                if((piece.Color == Color.white && destination.Line == 0) || (piece.Color == Color.black && destination.Line == 7))
+                {
+                    piece = Board.RemovePiece(destination);
+                    Pieces.Remove(piece);
+                    Piece queen = new Queen(Board, piece.Color);
+                    Board.AddPiece(queen, destination);
+                    Pieces.Add(queen);
+                }
             }
 
             if (IsCheck(Oposite(ActualPlayer)))
@@ -178,7 +192,6 @@ namespace chess
 
             // # Special: En Passant
 
-            Piece piece = Board.Piece(destination);
             if (piece is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2))
             {
                 EnPassantVulnerable = piece;
